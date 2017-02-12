@@ -6,19 +6,20 @@ using System.Diagnostics;
 
 public static async Task Run(TimerInfo myTimer, TraceWriter log)
 {
+    var watch = Stopwatch.StartNew();
     using (var client = new HttpClient())
     {
-        var watch = new Stopwatch();
-        watch.Start();
+        long preRequest = watch.ElapsedMilliseconds;
         HttpResponseMessage response = await client.GetAsync("http://jotto.seanhokanson.org/api/games/latest/");
-        watch.Stop();
+        long postRequest = watch.ElapsedMilliseconds;
         if (response.IsSuccessStatusCode)
         {
-            log.Info($"ping successful ({watch.ElapsedMilliseconds} ms)");
+            log.Info($"ping successful ({postRequest-preRequest} ms)");
         }
         else
         {
-            log.Error($"ping failed with status code {response.StatusCode} after {watch.ElapsedMilliseconds} ms");
+            log.Error($"ping failed with status code {response.StatusCode} after {postRequest-preRequest} ms");
         }
-    }    
+    }
+    log.Info($"total time: {watch.ElapsedMilliseconds} ms");
 }
