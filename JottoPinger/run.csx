@@ -1,8 +1,8 @@
-#r "System.Net.Http"
+//#r "System.Net.Http"
 
 using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Net.Http;
+//using System.Threading.Tasks;
+//using System.Net.Http;
 
 public static async Task Run(TimerInfo myTimer, TraceWriter log)
 {
